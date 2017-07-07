@@ -1,5 +1,5 @@
 require 'delegate'
-require 'ransack/adapters/mongoid'
+# require 'ransack/adapters/mongoid'
 
 module ActiveAdmin::Mongoid::Document
   extend ActiveSupport::Concern
@@ -58,6 +58,17 @@ module ActiveAdmin::Mongoid::Document
       criteria
     end
 
+    def ransack *args
+      scoped
+
+      scoped.class.class_eval do
+        def result
+          self
+        end
+      end
+
+      scoped
+    end
 
     # Cache
 
